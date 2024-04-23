@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>atn_leica_timesync</name>
+  <version>0.0.1</version>
+  <description>The leica_timesync package</description>
+
+  <!-- Maintainer details: Change as needed -->
+  <maintainer email="timathis@ethz.ch">Timon Mathis</maintainer>
+
+  <!-- License information -->
+  <license>BSD</license>
+
+  <!-- Dependencies -->
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+
+  <build_export_depend>roscpp</build_export_depend>
+  <build_export_depend>geometry_msgs</build_export_depend>
+  <build_export_depend>sensor_msgs</build_export_depend>
+
+  <exec_depend>roscpp</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+
+
+  <export>
+    <!-- Other tools can put additional tags here -->
+  </export>
+</package>
