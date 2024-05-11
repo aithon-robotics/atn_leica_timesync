@@ -7,14 +7,25 @@ LeicaTimesync::LeicaTimesync() : nh_("~")
 
     imu_sub_ = nh_.subscribe<sensor_msgs::Imu>("/imu/data_raw", 10, &LeicaTimesync::imuCallback, this, ros::TransportHints().tcpNoDelay());
     imu_pub_ = nh_.advertise<sensor_msgs::Imu>("/imu/data_raw/rostime", 10);
+
+    offset_pub_ = nh_.advertise<std_msgs::Float64>("/leica/clockoffset", 10);
 }
 
 void LeicaTimesync::pointCallback(const geometry_msgs::PointStamped::ConstPtr& msg)
 {
     geometry_msgs::PointStamped output_msg = *msg;
-    output_msg.header.stamp = ros::Time::now(); // Subtract a delay of 60ms from the current timestamp"
+    std_msgs::Float64 filtered_diff_msg;
+
+    double clock_offset = ros::Time::now().toSec() - msg->header.stamp.toSec();
+    filtered_diff_ = imu_filter_.filter(clock_offset);
+
+    output_msg.header.stamp = ros::Time(msg->header.stamp.toSec() + filtered_diff_); // Subtract a delay of 60ms from the current timestamp"
     output_msg.header.frame_id = "";
+
     point_pub_.publish(output_msg);
+
+    filtered_diff_msg.data = filtered_diff_;
+    offset_pub_.publish(filtered_diff_msg);
 }
 
 void LeicaTimesync::imuCallback(const sensor_msgs::Imu::ConstPtr& msg)
