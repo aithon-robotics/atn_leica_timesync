@@ -23,7 +23,7 @@ include_directories(
 )
 
 ## Declare a C++ executable
-add_executable(${PROJECT_NAME}_node src/leica_timesync.cc)
+add_executable(${PROJECT_NAME}_node src/leica_timesync.cc src/LowPassFilter.cc)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(${PROJECT_NAME}_node
