@@ -7,7 +7,7 @@
 #include <sensor_msgs/Imu.h>
 
 // LowPassFilter class definition
-#include "lowpass_filter.h"
+#include "LowPassFilter.h"
 
 class LeicaTimesync
 {
@@ -24,11 +24,12 @@ private:
     ros::Publisher imu_pub_;
 
     ros::Publisher offset_pub_;
+    ros::Publisher raw_offset_pub_;
 
     void pointCallback(const geometry_msgs::PointStamped::ConstPtr& msg);
     void imuCallback(const sensor_msgs::Imu::ConstPtr& msg);
 
-    LowPassFilter imu_filter_{0.002, 3};
+    LowPassFilter filter_ = LowPassFilter(0.5, 0.005);
     double filtered_diff_ = 0.0;
 };
 
