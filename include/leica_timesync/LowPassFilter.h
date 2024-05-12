@@ -12,10 +12,14 @@ public:
 	//functions
 	double update(double input);
 	double update(double input, double deltaTime, double cutoffFrequency);
+
+    //intit filter 
+    double init_filter(double input);
+
 	//get and configure funtions
-	double getOutput() const{return output;}
+	double getOutput() const{return output_;}
 	void reconfigureFilter(double deltaTime, double cutoffFrequency);
 private:
-	double output;
-	double ePow;
+	double output_;
+	double ePow_;
 };

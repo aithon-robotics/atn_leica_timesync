@@ -29,6 +29,14 @@ void LeicaTimesync::imuCallback(const sensor_msgs::Imu::ConstPtr& msg)
     std_msgs::Float64 raw_offset_msg;
 
     double clock_offset = ros::Time::now().toSec() - msg->header.stamp.toSec();
+
+    // Initialize filter with first clock offset
+    if(init_filter_)
+    {
+        filter_.init_filter(clock_offset);
+        init_filter_ = false;
+    }
+
     filtered_diff_ = filter_.update(clock_offset);
 
     output_msg.header.stamp = ros::Time(msg->header.stamp.toSec() + filtered_diff_);

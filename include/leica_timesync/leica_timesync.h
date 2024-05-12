@@ -29,8 +29,9 @@ private:
     void pointCallback(const geometry_msgs::PointStamped::ConstPtr& msg);
     void imuCallback(const sensor_msgs::Imu::ConstPtr& msg);
 
-    LowPassFilter filter_ = LowPassFilter(0.5, 0.005);
+    LowPassFilter filter_ = LowPassFilter(0.3, 0.005);
     double filtered_diff_ = 0.0;
+    bool init_filter_ = true;
 };
 
 #endif // LEICA_TIMESYNC_H
