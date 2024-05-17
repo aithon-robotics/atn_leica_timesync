@@ -17,7 +17,7 @@ void LeicaTimesync::pointCallback(const geometry_msgs::PointStamped::ConstPtr& m
     geometry_msgs::PointStamped output_msg = *msg;
 
     output_msg.header.stamp = ros::Time(msg->header.stamp.toSec() + filtered_diff_);
-    output_msg.header.frame_id = "";
+    output_msg.header.frame_id = "leica";
 
     point_pub_.publish(output_msg);
 }
@@ -40,7 +40,7 @@ void LeicaTimesync::imuCallback(const sensor_msgs::Imu::ConstPtr& msg)
     filtered_diff_ = filter_.update(clock_offset);
 
     output_msg.header.stamp = ros::Time(msg->header.stamp.toSec() + filtered_diff_);
-    output_msg.header.frame_id = "";
+    output_msg.header.frame_id = "imu";
 
     imu_pub_.publish(output_msg);
 
